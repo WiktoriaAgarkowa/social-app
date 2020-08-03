@@ -11,16 +11,20 @@ import {
   Link
 } from "react-router-dom";
 
+
 const Menu = styled.ul`
 list-style: none;
-color: green;
+background-color: #5DE100;
+color: white;
 text-align: center;
+margin: 0;
 `;
 
 const MenuItem = styled.li`
 display: inline-block;
-padding: 10px 30px;
+padding: 30px 30px;
 `;
+
 
 class SocialApp extends Component {
     constructor() {
@@ -37,7 +41,7 @@ class SocialApp extends Component {
                     <MenuItem><Link to="/">Home</Link></MenuItem>
 
                     <MenuItem><Link to="/signup">Sign Up</Link></MenuItem>
-                    
+
                     <MenuItem><Link to="/login">Login</Link></MenuItem>
                   </Menu>
                 </nav>
