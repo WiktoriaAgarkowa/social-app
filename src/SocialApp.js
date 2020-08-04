@@ -29,7 +29,13 @@ padding: 30px 30px;
 class SocialApp extends Component {
     constructor() {
         super();
+        this.state = {
+          newUsers: [],
+          logInUsers: []
+      }
     }
+
+    
 
     render() {
 

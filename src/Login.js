@@ -14,10 +14,11 @@ padding: 10px 10px;
 const Button = styled.button`
 display: block;
 margin: 0 auto;
-padding: 10px;
+padding: 10px 50px;
 background-color: #659A00;
 color: white;
-border: 0; 
+border: 0;
+border-radius: 20px; 
 
 &:hover {
     background-color: #5FA92A;
@@ -29,11 +30,11 @@ const SignUp = () => {
     return (
         <>
 
-        <Heading>Log In</Heading>
+        <Heading>Zaloguj Się</Heading>
 
         <form>
-            <Input type="text" placeholder="Name" />
-            <Input type="password" placeholder="Password" />
+            <Input type="text" placeholder="Imię" />
+            <Input type="password" placeholder="Hasło" />
             <Button type="submit">Log In</Button>
         </form>
         </>
