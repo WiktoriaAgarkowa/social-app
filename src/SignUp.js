@@ -20,7 +20,6 @@ background-color: #659A00;
 color: white;
 border: 0; 
 border-radius: 20px;
-
 &:hover {
     background-color: #5FA92A;
     cursor: pointer;
@@ -29,112 +28,75 @@ border-radius: 20px;
 
 class SignUp extends Component {
     constructor(props) {
-        super(props);
+        super(props)
+
         this.state = {
-            signUpName: " ",
-            signUpEmail: " ",
-            signUpPassword: " "
-        }
-    }
-
-    setData() {
-        this.setState({
-            signUpName: this._newNameInput.value,
-            signUpEmail: this._newEmailInput.value,
-            signUpPassword: this._newPasswordInput.value
-        });
-
-        console.log(this.state)
-    }
-
-
-
-    signUpMethod = () => {
-
-        let newUser = {
-          username: this._newNameInput.value,
-          email: this._newEmailInput.value,
-          passwor: this._newPasswordInput.value
+            signUpName: "name",
+            signUpEmail: "email@pl.com",
+            signUpPassword: "1234@Wiktoria"
         };
-  
-        const headers = {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-      }
-      
-            axios.post(
-                'http://akademia108.pl/api/social-app/user/signup', 
-                JSON.stringify(newUser),
-                { 'headers': headers })
-                .then((req) => {
-    
-                        console.log(req.data);  
-
-                    }).catch((error) => {
-                        console.error(error);
-                    });
     };
 
-    formValidation = (e) => {
-            
-            e.preventDefault();
+    test = () => {
+        console.log(this.state)
+        console.log (this._newNameInput.value)
+    }
 
-            let newNameUser = this._newNameInput.value;
-            let newEmailUser = this._newEmailInput.value;
-            let newPassword = this._newPasswordInput.value;
-            let confirmPassword = this._confirmPasswordInput.value;
+    createUser = (e) => {
 
-            if (newNameUser.value.trim() === '') {
-                console.log('Podaj imię')
-            } 
+        e.preventDefault();
 
-            if (newNameUser.value.length < 4) {
-                console.log('Imię musi zawierać min. 4 znaki')
-            }
-
-            if (newNameUser.value.trim().includes(' ')) {
-                console.log('Imię nie może posiaać spacji')
-            }
-            
-            if (newEmailUser.value.trim() === '') {
-                console.log('Podaj e-mail')
-            } 
-            
-            if (newPassword.value.trim() === '') {
-                console.log('Stwórz hasło')
-            } 
-
-            if (newPassword.value.length < 6) {
-                console.log('Hasło musi zawierać min. 6 znaków')
-            }
-            
-            if (newPassword.value.trim() !== confirmPassword.value.trim()) {
-                console.log('Hasła nie są identyczne')
-            } 
-            
-            else {
-                this.signUpMethod();
-            }
-
+        let newUser = {
+            username: this._newNameInput.value,
+            email: this._newEmailInput.value,
+            password: this._newPasswordInput.value
         }
 
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+
+        axios.post(
+            'http://akademia108.pl/api/social-app/user/signup', 
+            JSON.stringify(newUser),
+            {'headers': headers})
+            .then((req)=> {
+                
+                this.setState({
+                    signUpName: this._newNameInput.value,
+                    signUpEmail: this._newEmailInput.value,
+                    signUpPassword: this._newPasswordInput.value
+                })
+
+                console.log(req.data);
+            }).catch((error) => {
+                console.error(error);
+            })
+    }
     
 
 
     render() {
             return (
+
                 <>
         
                 <Heading>Stwórz Nowy Profil</Heading>
         
-                <form onSubmit={() => this.formValidation}>
+                <form onSubmit={this.createUser}>
 
                     <Input ref={element => this._newNameInput = element} 
-                    onChange={this.setData} type="text" placeholder="Imie (min. 4 znaki)*" />
+                    onChange={this.test}
+                     type="text" placeholder="Imie (min. 4 znaki)*" />
 
-                    <Input ref={element => this._newEmailInput = element} onChange={this.setData} type="email" placeholder="E-mail" />
+                    <Input ref={element => this._newEmailInput = element} 
+                    onChange={this.test}
+                    type="email" placeholder="E-mail" />
 
-                    <Input ref={element => this._newPasswordInput = element} onChange={this.setData} type="password" placeholder="Hasło (min. 6 znaków)*" />
+                    <Input ref={element => this._newPasswordInput = element}
+                    onChange={this.test}
+                    type="password" placeholder="Hasło (min. 6 znaków)*" />
 
                     <Input ref={element => this._confirmPasswordInput = element} type="password" placeholder="Powtórz hasło" />
                    
@@ -142,8 +104,8 @@ class SignUp extends Component {
 
                 </form>
                 </>
-             )
-        }
-}
+                
+             )};
+};
 
 export default SignUp;
