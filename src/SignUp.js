@@ -100,7 +100,7 @@ class SignUp extends Component {
 
                     <Input ref={element => this._confirmPasswordInput = element} type="password" placeholder="Powtórz hasło" />
                    
-                    <Button type="submit">Sign Up</Button>
+                    <Button onClick={() => {this.props.addUserMethod(this.state)}} type="submit">Sign Up</Button>
 
                 </form>
                 </>
