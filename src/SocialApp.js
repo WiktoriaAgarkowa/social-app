@@ -67,7 +67,7 @@ class SocialApp extends Component {
                 </Route>
         
                 <Route path="/signup">
-                  <SignUp />
+                  <SignUp addUserMethod = {this.addNewUser} />
                 </Route>
         
                 <Route>
