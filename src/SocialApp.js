@@ -35,6 +35,12 @@ class SocialApp extends Component {
       }
     }
 
+    addNewUser = () => {
+      let newUserArray = this.state.newUsers.push('object')
+
+      this.setState({newUsers: newUserArray})
+    }
+
     
 
     render() {
