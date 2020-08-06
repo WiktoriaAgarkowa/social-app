@@ -39,7 +39,6 @@ class SignUp extends Component {
         super(props)
 
         this.state = {
-            error: false,
             username: " ",
             email: " ",
             password: " ",
@@ -58,50 +57,57 @@ class SignUp extends Component {
 
         e.preventDefault();
 
+        let newUser = {
+            username: this._newNameInput.value,
+            email: this._newEmailInput.value,
+            password: this._newPasswordInput.value
+        }
+
+        let error = true;
+
         if(this._newNameInput.value === "" || this._newEmailInput.value === ""){
             console.log("Puste pola")
-            this.setState({error: true})
+            error = true;
         }
 
         else if (this._newNameInput.value.length < 4){
             console.log("Min 4 znaki w Name")
-            this.setState({error: true})
+            error = true;
         }
 
         else if (this._newNameInput.value.includes(" ")){
             console.log("Białe znaki w polu Name")
-            this.setState({error: true})
+            error = true;
         }
 
         else if (this._newPasswordInput.value.length < 6){
             console.log("Za krótkie hasło")
-            this.setState({error: true})
+            error = true;
         }
 
         else if (this._newPasswordInput !== this._confirmPasswordInput) {
             console.log("Hasła muszą być identyczne")
-            this.setState({error: true})
+            error = true;
         } 
         else {
-             this.setState(state => {
-                 return ({
-                     error: false
-                    });
-                });
-
-                this.createUser();
+            error = false;
         }
         
+        if(error === false) {
+            this.createUser(newUser);
+        } else {
+            console.log("Błąd w formularzu")
+        }
     };
     
 
-    createUser = () => {
+    createUser = (newUser) => {
 
-            let newUser = {
-                username: this._newNameInput.value,
-                email: this._newEmailInput.value,
-                password: this._newPasswordInput.value
-            }
+            // let newUser = {
+            //     username: this._newNameInput.value,
+            //     email: this._newEmailInput.value,
+            //     password: this._newPasswordInput.value
+            // }
     
             const headers = {
                 'Content-Type': 'application/json',
