@@ -54,12 +54,12 @@ class SignUp extends Component {
         })
     }
 
-    validate = () => {
+    validate = (e) => {
 
-        
+        e.preventDefault();
 
-        if(this._newNameInput.value === ""){
-            console.log("Puste pole Name")
+        if(this._newNameInput.value === "" || this._newEmailInput.value === ""){
+            console.log("Puste pola")
             this.setState({error: true})
         }
 
@@ -73,11 +73,6 @@ class SignUp extends Component {
             this.setState({error: true})
         }
 
-        else if(this._newEmailInput.value === ""){
-            console.log("Puste pole Email")
-            this.setState({error: true})
-        }
-
         else if (this._newPasswordInput.value.length < 6){
             console.log("Za krótkie hasło")
             this.setState({error: true})
@@ -88,19 +83,19 @@ class SignUp extends Component {
             this.setState({error: true})
         } 
         else {
-             this.setState({error: false})
+             this.setState(state => {
+                 return ({
+                     error: false
+                    });
+                });
+
+                this.createUser();
         }
         
     };
     
 
-    createUser = (e) => {
-
-        e.preventDefault();
-
-        this.validate();
-
-        if (this.state.error === false) {
+    createUser = () => {
 
             let newUser = {
                 username: this._newNameInput.value,
@@ -125,7 +120,7 @@ class SignUp extends Component {
                 }).catch((error) => {
                     console.error(error);
                 })
-        } 
+        
 
        
     }
@@ -139,7 +134,7 @@ class SignUp extends Component {
         
                 <Heading>Stwórz Nowy Profil</Heading>
         
-                <form onSubmit={this.createUser}>
+                <form onSubmit={this.validate}>
 
                     <Input ref={element => this._newNameInput = element} 
                     onChange={this.inputChange}
