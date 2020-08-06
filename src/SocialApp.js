@@ -79,28 +79,28 @@ class SocialApp extends Component {
 
     logOut = () => {
 
-      this.setState({sessionToken: ''})
-      localStorage.clear();
-    //   let headers = {
-    //     'Content-Type': 'application/json',
-    //     'Accept': 'application/json',
-    //     'Authorization': 'Bearer ' + <jwtToken />
-    // };
+      // this.setState({sessionToken: ''})
+      // localStorage.clear();
+      let headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + <jwtToken />
+    };
 
-    // axios.post(
-    //     'https://akademia108.pl/api/social-app/user/logout',
-    //     {'headers': headers})
-    //     .then((req)=> {
+    axios.post(
+        'https://akademia108.pl/api/social-app/user/logout',
+        {'headers': headers})
+        .then((req)=> {
             
 
             this.setState({sessionToken: ''})
             localStorage.clear();
             this.setLogin(false);
-    //         console.log(req.data);
+            console.log(req.data);
 
-    //     }).catch((error) => {
-    //         console.error(error);
-    //     })
+        }).catch((error) => {
+            console.error(error);
+        })
       
     }
     
