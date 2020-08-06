@@ -103,12 +103,6 @@ class SignUp extends Component {
 
     createUser = (newUser) => {
 
-            // let newUser = {
-            //     username: this._newNameInput.value,
-            //     email: this._newEmailInput.value,
-            //     password: this._newPasswordInput.value
-            // }
-    
             const headers = {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
