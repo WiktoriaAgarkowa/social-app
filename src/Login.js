@@ -5,6 +5,10 @@ import styled from 'styled-components';
 
 const Heading = styled.h1`
 text-align: center;
+font-family: 'Inconsolata', monospace;
+padding: 40px;
+color: #1A181D;
+font-weight: 500;
 `;
 
 const Input = styled.input`
@@ -41,7 +45,8 @@ class LogIn extends Component {
 
         this.state = {
             username: " ",
-            password: " "
+            password: " ",
+            errorMsg: " "
         }
     }
 
@@ -73,10 +78,25 @@ class LogIn extends Component {
             {'headers': headers})
             .then((req)=> {
                 
-                this.props.setToken(req.data.jwt_token)
                 
 
-                console.log(req.data);
+                if(req.data.jwt_token === undefined) {
+                    this.setState(state => {
+                        return({
+                            errorMsg: "Błąd wprowadzonych danych"
+                        });
+                    });
+                } else {
+                    this.props.setToken(req.data.jwt_token);
+
+                    localStorage.setItem('user', JSON.stringify(req.data));
+
+                    this.props.changeLoginState(true);
+
+                    console.log(req.data)
+                }
+                
+                
             }).catch((error) => {
                 console.error(error);
             })

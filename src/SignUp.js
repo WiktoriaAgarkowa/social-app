@@ -4,6 +4,10 @@ import styled from 'styled-components';
 
 const Heading = styled.h1`
 text-align: center;
+font-family: 'Inconsolata', monospace;
+padding: 40px;
+color: #1A181D;
+font-weight: 500;
 `;
 
 const Input = styled.input`

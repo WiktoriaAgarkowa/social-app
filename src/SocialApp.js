@@ -1,24 +1,37 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import logo from './logo.png'
 import Home from './Home';
 import SignUp from './SignUp';
 import Login from './Login';
+import LogOut from './LogOut'
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
+
 
 
 const Menu = styled.ul`
 list-style: none;
+position: relative;
 background-color: #a538ff;
 color: white;
 text-align: center;
 margin: 0;
+`;
+
+const Logo = styled.img`
+height: 60px;
+position: absolute;
+left: 250px;
+bottom: -5px;
+padding: 20px
 `;
 
 const MenuItem = styled.li`
@@ -26,12 +39,21 @@ display: inline-block;
 padding: 30px 30px;
 `;
 
+const LinkMenu = styled(Link)`
+text-decoration: none;
+color:white;
+text-transform: uppercase;
+`;
+
 
 
 class SocialApp extends Component {
     constructor() {
         super();
+
+        this.user = JSON.parse(localStorage.getItem('user'))
         this.state = {
+          login: (this.user)?true:false,
           username: '',
           email: '',
           sessionToken: ''
@@ -57,28 +79,38 @@ class SocialApp extends Component {
 
     logOut = () => {
 
-      let headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + <jwtToken />
-    };
+      this.setState({sessionToken: ''})
+      localStorage.clear();
+    //   let headers = {
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json',
+    //     'Authorization': 'Bearer ' + <jwtToken />
+    // };
 
-    axios.post(
-        'https://akademia108.pl/api/social-app/user/logout',
-        {'headers': headers})
-        .then((req)=> {
+    // axios.post(
+    //     'https://akademia108.pl/api/social-app/user/logout',
+    //     {'headers': headers})
+    //     .then((req)=> {
             
 
             this.setState({sessionToken: ''})
             localStorage.clear();
-            console.log(req.data);
-            
-        }).catch((error) => {
-            console.error(error);
-        })
+            this.setLogin(false);
+    //         console.log(req.data);
+
+    //     }).catch((error) => {
+    //         console.error(error);
+    //     })
       
     }
     
+    setLogin = (action) => {
+      this.setState(prevState => {
+        return({
+          login: action
+        }); 
+      });
+    }
 
     render() {
 
@@ -87,14 +119,18 @@ class SocialApp extends Component {
               
               <div className="App">
               <nav>
+                  
                   <Menu>
-                    <MenuItem><Link to="/">Home</Link></MenuItem>
 
-                    <MenuItem><Link to="/signup">Sign Up</Link></MenuItem>
+                    <Logo src={logo} className="App-logo" alt="logo" />
+                    <MenuItem><LinkMenu to="/">Home</LinkMenu></MenuItem>
 
-                    <MenuItem><Link to="/login">Login</Link></MenuItem>
+                    <MenuItem><LinkMenu to="/signup">Sign Up</LinkMenu></MenuItem>
 
-                    <MenuItem><button onClick={this.logOut}>Log Out</button></MenuItem>
+                    <MenuItem><LinkMenu to="/login">LogIn</LinkMenu></MenuItem>
+
+                    <MenuItem><LinkMenu onClick={this.logOut}>LogOut</LinkMenu></MenuItem>
+
                   </Menu>
                 </nav>
               
@@ -111,7 +147,11 @@ class SocialApp extends Component {
                 </Route>
         
                 <Route path="/login">
-                  <Login setToken={this.setSessionState} />
+                 {this.state.login ? <Redirect to="/" /> : <Login setToken={this.setSessionState} />}
+                </Route>
+
+                <Route path="/login">
+                  <LogOut />
                 </Route>
 
         
