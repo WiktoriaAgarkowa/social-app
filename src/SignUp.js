@@ -9,19 +9,27 @@ text-align: center;
 const Input = styled.input`
 display: block;
 margin: 20px auto;
-padding: 10px 10px;
+padding: 10px 40px 10px 10px;
+border: 0;
+border-bottom: 1px solid grey;
+&:focus {
+    border: 0;
+    border-bottom: 1px solid grey;
+    outline: 0;
+}
 `;
 
 const Button = styled.button`
 display: block;
 margin: 0 auto;
 padding: 10px 50px;
-background-color: #659A00;
+background-color: #a538ff;
 color: white;
 border: 0; 
 border-radius: 20px;
+transition: all 0.7s;
 &:hover {
-    background-color: #5FA92A;
+    background-color: #892dcf;
     cursor: pointer;
 }
 `;
@@ -31,48 +39,95 @@ class SignUp extends Component {
         super(props)
 
         this.state = {
-            signUpName: "name",
-            signUpEmail: "email@pl.com",
-            signUpPassword: "1234@Wiktoria"
+            error: false,
+            username: " ",
+            email: " ",
+            password: " ",
+            confirm: " "
         };
     };
 
-    test = () => {
-        console.log(this.state)
-        console.log (this._newNameInput.value)
+    inputChange = (event) => {
+
+        this.setState({
+            [event.target.name]: event.target.value,
+        })
     }
+
+    validate = () => {
+
+        
+
+        if(this._newNameInput.value === ""){
+            console.log("Puste pole Name")
+            this.setState({error: true})
+        }
+
+        else if (this._newNameInput.value.length < 4){
+            console.log("Min 4 znaki w Name")
+            this.setState({error: true})
+        }
+
+        else if (this._newNameInput.value.includes(" ")){
+            console.log("Białe znaki w polu Name")
+            this.setState({error: true})
+        }
+
+        else if(this._newEmailInput.value === ""){
+            console.log("Puste pole Email")
+            this.setState({error: true})
+        }
+
+        else if (this._newPasswordInput.value.length < 6){
+            console.log("Za krótkie hasło")
+            this.setState({error: true})
+        }
+
+        else if (this._newPasswordInput !== this._confirmPasswordInput) {
+            console.log("Hasła muszą być identyczne")
+            this.setState({error: true})
+        } 
+        else {
+             this.setState({error: false})
+        }
+        
+    };
+    
 
     createUser = (e) => {
 
         e.preventDefault();
 
-        let newUser = {
-            username: this._newNameInput.value,
-            email: this._newEmailInput.value,
-            password: this._newPasswordInput.value
-        }
+        this.validate();
 
-        const headers = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
+        if (this.state.error === false) {
 
-        axios.post(
-            'http://akademia108.pl/api/social-app/user/signup', 
-            JSON.stringify(newUser),
-            {'headers': headers})
-            .then((req)=> {
-                
-                this.setState({
-                    signUpName: this._newNameInput.value,
-                    signUpEmail: this._newEmailInput.value,
-                    signUpPassword: this._newPasswordInput.value
+            let newUser = {
+                username: this._newNameInput.value,
+                email: this._newEmailInput.value,
+                password: this._newPasswordInput.value
+            }
+    
+            const headers = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+    
+            axios.post(
+                'http://akademia108.pl/api/social-app/user/signup', 
+                JSON.stringify(newUser),
+                {'headers': headers})
+                .then((req)=> {
+                    
+                    this.props.setToken(req.data.jwt_token)
+    
+                    console.log(req.data);
+                }).catch((error) => {
+                    console.error(error);
                 })
+        } 
 
-                console.log(req.data);
-            }).catch((error) => {
-                console.error(error);
-            })
+       
     }
     
 
@@ -87,20 +142,20 @@ class SignUp extends Component {
                 <form onSubmit={this.createUser}>
 
                     <Input ref={element => this._newNameInput = element} 
-                    onChange={this.test}
-                     type="text" placeholder="Imie (min. 4 znaki)*" />
+                    onChange={this.inputChange}
+                    name="username" type="text" placeholder="Imie (min. 4 znaki)*" />
 
                     <Input ref={element => this._newEmailInput = element} 
-                    onChange={this.test}
-                    type="email" placeholder="E-mail" />
+                    onChange={this.inputChange}
+                    name="email" type="email" placeholder="E-mail" />
 
                     <Input ref={element => this._newPasswordInput = element}
-                    onChange={this.test}
-                    type="password" placeholder="Hasło (min. 6 znaków)*" />
+                    onChange={this.inputChange}
+                    name="password" type="password" placeholder="Hasło (min. 6 znaków)*" />
 
-                    <Input ref={element => this._confirmPasswordInput = element} type="password" placeholder="Powtórz hasło" />
+                    <Input ref={element => this._confirmPasswordInput = element} onChange={this.inputChange} name="confirm"  type="password" placeholder="Powtórz hasło" />
                    
-                    <Button onClick={() => {this.props.addUserMethod(this.state)}} type="submit">Sign Up</Button>
+                    <Button type="submit">Sign Up</Button>
 
                 </form>
                 </>

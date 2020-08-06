@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import Home from './Home';
 import SignUp from './SignUp';
@@ -14,7 +15,7 @@ import {
 
 const Menu = styled.ul`
 list-style: none;
-background-color: #5DE100;
+background-color: #a538ff;
 color: white;
 text-align: center;
 margin: 0;
@@ -26,27 +27,64 @@ padding: 30px 30px;
 `;
 
 
+
 class SocialApp extends Component {
     constructor() {
         super();
         this.state = {
-          newUsers: [],
-          logInUsers: []
+          username: '',
+          email: '',
+          sessionToken: ''
+        }
+    }
+
+    componentDidMount() {
+      const token = localStorage.getItem('token');
+      if (token && !this.state.sessionToken) {
+        this.setState ({sessionToken: token});
       }
     }
 
-    addNewUser = (element) => {
-      let newUserArray = this.state.newUsers.push(element)
-
-      this.setState({newUsers: newUserArray})
+    setSessionState = (token) => {
+      localStorage.setItem('token', token);
+      this.setState({sessionToken: token});
     }
 
+    setNameState = (username) => {
+      localStorage.setItem('username', username);
+      this.setState({username: username});
+    }
+
+    logOut = () => {
+
+      let headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + <jwtToken />
+    };
+
+    axios.post(
+        'https://akademia108.pl/api/social-app/user/logout',
+        {'headers': headers})
+        .then((req)=> {
+            
+
+            this.setState({sessionToken: ''})
+            localStorage.clear();
+            console.log(req.data);
+            
+        }).catch((error) => {
+            console.error(error);
+        })
+      
+    }
     
 
     render() {
 
         return (
             <Router>
+              
               <div className="App">
               <nav>
                   <Menu>
@@ -55,6 +93,8 @@ class SocialApp extends Component {
                     <MenuItem><Link to="/signup">Sign Up</Link></MenuItem>
 
                     <MenuItem><Link to="/login">Login</Link></MenuItem>
+
+                    <MenuItem><button onClick={this.logOut}>Log Out</button></MenuItem>
                   </Menu>
                 </nav>
               
@@ -67,12 +107,13 @@ class SocialApp extends Component {
                 </Route>
         
                 <Route path="/signup">
-                  <SignUp addUserMethod = {this.addNewUser} />
+                  <SignUp setToken={this.setSessionState} />
                 </Route>
         
-                <Route>
-                  <Login path="/login"/>
+                <Route path="/login">
+                  <Login setToken={this.setSessionState} />
                 </Route>
+
         
               </Switch> 
         
