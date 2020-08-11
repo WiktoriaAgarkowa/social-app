@@ -29,7 +29,7 @@ margin: 0;
 const Logo = styled.img`
 height: 60px;
 position: absolute;
-left: 250px;
+left: 150px;
 bottom: -5px;
 padding: 20px
 `;
@@ -50,8 +50,6 @@ text-transform: uppercase;
 class SocialApp extends Component {
     constructor() {
         super();
-
-        this.user = JSON.parse(localStorage.getItem('user'))
         this.state = {
           login: (this.user)?true:false,
           username: '',
@@ -78,20 +76,21 @@ class SocialApp extends Component {
     }
 
     logOut = () => {
+      this.user = JSON.parse(localStorage.getItem('user'))
 
-      // this.setState({sessionToken: ''})
-      // localStorage.clear();
       let headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + <jwtToken />
+        'Authorization': 'Bearer ' + this.user.jwt_token
     };
 
     axios.post(
         'https://akademia108.pl/api/social-app/user/logout',
+        {},
         {'headers': headers})
         .then((req)=> {
             
+          
 
             this.setState({sessionToken: ''})
             localStorage.clear();
@@ -113,8 +112,10 @@ class SocialApp extends Component {
     }
 
     render() {
+      let user = JSON.parse(localStorage.getItem('user'));
 
         return (
+          
             <Router>
               
               <div className="App">
@@ -125,11 +126,11 @@ class SocialApp extends Component {
                     <Logo src={logo} className="App-logo" alt="logo" />
                     <MenuItem><LinkMenu to="/">Home</LinkMenu></MenuItem>
 
-                    <MenuItem><LinkMenu to="/signup">Sign Up</LinkMenu></MenuItem>
+                    {localStorage.token === undefined && <MenuItem><LinkMenu to="/signup">Sign Up</LinkMenu></MenuItem>}
 
-                    <MenuItem><LinkMenu to="/login">LogIn</LinkMenu></MenuItem>
+                    {!user && <MenuItem><LinkMenu to="/login">LogIn</LinkMenu></MenuItem>}
 
-                    <MenuItem><LinkMenu onClick={this.logOut}>LogOut</LinkMenu></MenuItem>
+                    {user && <MenuItem><LinkMenu to="/" onClick={this.logOut}>LogOut</LinkMenu></MenuItem>}
 
                   </Menu>
                 </nav>
@@ -143,14 +144,14 @@ class SocialApp extends Component {
                 </Route>
         
                 <Route path="/signup">
-                  <SignUp setToken={this.setSessionState} />
+                  {this.state.login ? <Redirect to="/" /> : <SignUp setToken={this.setSessionState} changeLoginState={this.setLogin} />}
                 </Route>
         
                 <Route path="/login">
-                 {this.state.login ? <Redirect to="/" /> : <Login setToken={this.setSessionState} />}
+                 {this.state.login ? <Redirect to="/" /> : <Login setToken={this.setSessionState} changeLoginState={this.setLogin}/>}
                 </Route>
 
-                <Route path="/login">
+                <Route path="/">
                   <LogOut />
                 </Route>
 

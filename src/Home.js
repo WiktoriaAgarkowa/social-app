@@ -36,13 +36,13 @@ class Home extends Component {
             .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res.data);
 
-                let newPost = res.data.map((post) => {
-                    return(
-                        <p>
-                            {res.data.content}
-                        </p>
-                    )
-                })
+                // let newPost = res.data.map((post) => {
+                //     return(
+                //         <p>
+                //             {res.data.content}
+                //         </p>
+                //     )
+                // })
             })
             .catch((err) => {
                 console.log("AXIOS ERROR: ", err);

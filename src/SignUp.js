@@ -38,15 +38,23 @@ transition: all 0.7s;
 }
 `;
 
+const Error = styled.p`
+color: red;
+font-size: 13px;
+text-align: center;
+margin: 10px;
+`;
+
 class SignUp extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            username: " ",
-            email: " ",
-            password: " ",
-            confirm: " "
+            username: "",
+            email: "",
+            password: "",
+            confirm: "",
+            errMsg: ""
         };
     };
 
@@ -68,30 +76,44 @@ class SignUp extends Component {
         }
 
         let error = true;
+        const oRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[\!\@\#\$\%\+\-\=])(?!.*\s).{6,}$/;
+        let test = oRegExp.test(this._newPasswordInput.value)
+        
 
         if(this._newNameInput.value === "" || this._newEmailInput.value === ""){
             console.log("Puste pola")
             error = true;
+            this.setState({errMsg: "Wprowadż imię i e-mail"})
         }
 
         else if (this._newNameInput.value.length < 4){
             console.log("Min 4 znaki w Name")
             error = true;
+            this.setState({errMsg: "Imię musi zawierać min. 4 litery"})
         }
 
         else if (this._newNameInput.value.includes(" ")){
             console.log("Białe znaki w polu Name")
             error = true;
+            this.setState({errMsg: "Imię nie może zawierać spacji"})
         }
 
         else if (this._newPasswordInput.value.length < 6){
             console.log("Za krótkie hasło")
             error = true;
+            this.setState({errMsg: "Za krótkie hasło"})
         }
 
-        else if (this._newPasswordInput !== this._confirmPasswordInput) {
+        else if (!test){
+            console.log("Hasło musi zawierać conajmniej 1 cyfrę i 1 znak specjalny (!, #, @, $, %)")
+            error = true;
+            this.setState({errMsg: "Hasło musi zawierać conajmniej 1 cyfrę i 1 znak specjalny (!, #, @, $, %)"})
+        }
+
+        else if (this._newPasswordInput.value !== this._confirmPasswordInput.value) {
             console.log("Hasła muszą być identyczne")
             error = true;
+            this.setState({errMsg: "Hasła nie są identyczne"})
         } 
         else {
             error = false;
@@ -119,13 +141,20 @@ class SignUp extends Component {
                 .then((req)=> {
                     
                     this.props.setToken(req.data.jwt_token)
+                    this.props.changeLoginState(true);
+
+                    this.setState({
+                        username: "",
+                        email: "",
+                        password: "",
+                        confirm: ""
+                    })
+                    
     
                     console.log(req.data);
                 }).catch((error) => {
                     console.error(error);
                 })
-        
-
        
     }
     
@@ -142,19 +171,33 @@ class SignUp extends Component {
 
                     <Input ref={element => this._newNameInput = element} 
                     onChange={this.inputChange}
+                    value={this.state.username}
                     name="username" type="text" placeholder="Imie (min. 4 znaki)*" />
+
+                    
 
                     <Input ref={element => this._newEmailInput = element} 
                     onChange={this.inputChange}
+                    value={this.state.email}
                     name="email" type="email" placeholder="E-mail" />
+
+                    
 
                     <Input ref={element => this._newPasswordInput = element}
                     onChange={this.inputChange}
+                    value={this.state.password}
                     name="password" type="password" placeholder="Hasło (min. 6 znaków)*" />
 
-                    <Input ref={element => this._confirmPasswordInput = element} onChange={this.inputChange} name="confirm"  type="password" placeholder="Powtórz hasło" />
+                    
+
+                    <Input ref={element => this._confirmPasswordInput = element}
+                    onChange={this.inputChange} 
+                    value={this.state.confirm}
+                    name="confirm"  type="password" placeholder="Powtórz hasło" />
                    
                     <Button type="submit">Sign Up</Button>
+
+                    <Error>{this.state.errMsg}</Error>
 
                 </form>
                 </>

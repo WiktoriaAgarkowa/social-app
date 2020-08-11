@@ -39,6 +39,12 @@ transition: all 0.7s;
 }
 `;
 
+const Error = styled.p`
+text-align: center;
+color:red;
+font-size: 13px;
+`;
+
 class LogIn extends Component {
     constructor(props){
         super(props);
@@ -83,7 +89,7 @@ class LogIn extends Component {
                 if(req.data.jwt_token === undefined) {
                     this.setState(state => {
                         return({
-                            errorMsg: "Błąd wprowadzonych danych"
+                            errorMsg: "*Nieprawidłowe hasło lub login"
                         });
                     });
                 } else {
@@ -115,6 +121,7 @@ class LogIn extends Component {
                 <Input onChange={this.inputChange} name="username" type="text" placeholder="Imię" />
                 <Input onChange={this.inputChange} name="password"  type="password" placeholder="Hasło" />
                 <Button type="submit">Log In</Button>
+                <Error>{this.state.errorMsg}</Error>
 
             </form>
             </>
