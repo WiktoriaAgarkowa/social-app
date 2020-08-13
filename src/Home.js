@@ -74,7 +74,7 @@ class Home extends Component {
             <div className="feed">
                 <Ul>
                     {this.state.feeds.map(post => <Li key={post.id}>{post.content}
-                    <Like likes={this.state.feeds.likes}/>
+                    <Like />
                     </Li>)}
                 </Ul>
             </div>

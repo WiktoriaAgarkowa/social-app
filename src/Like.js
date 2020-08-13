@@ -29,10 +29,10 @@ color: #1A181D;
 
 
 class Like extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            like: this.props,
+            like: 0,
             likeState: false
         }
     }
