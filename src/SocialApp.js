@@ -124,6 +124,7 @@ class SocialApp extends Component {
                   <Menu>
 
                     <Logo src={logo} className="App-logo" alt="logo" />
+                    
                     <MenuItem><LinkMenu to="/">Home</LinkMenu></MenuItem>
 
                     {localStorage.token === undefined && <MenuItem><LinkMenu to="/signup">Sign Up</LinkMenu></MenuItem>}

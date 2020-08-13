@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import Like from './Like';
 
 const Heading = styled.h1`
 text-align: center;
@@ -8,6 +9,21 @@ font-family: 'Inconsolata', monospace;
 padding: 40px;
 color: #1A181D;
 font-weight: 500;
+`;
+
+const Ul = styled.ul`
+list-style-type: none;
+padding: 0 40px;
+width: 70%;
+`;
+
+const Li = styled.li`
+padding: 20px;
+font-family: 'Inconsolata', monospace;
+margin: 30px 0;
+border-bottom: 1px solid #dfdae1;
+background-color: #fefcff;
+text-align: justify;
 `;
 
 class Home extends Component {
@@ -18,6 +34,8 @@ class Home extends Component {
             feeds: []
         }
     }
+
+    
 
     componentDidMount() {
         this.getPost();
@@ -36,18 +54,17 @@ class Home extends Component {
             .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res.data);
 
-                // let newPost = res.data.map((post) => {
-                //     return(
-                //         <p>
-                //             {res.data.content}
-                //         </p>
-                //     )
-                // })
+                this.setState({feeds: res.data})
+                
             })
             .catch((err) => {
                 console.log("AXIOS ERROR: ", err);
             })
+                  
+            
     }
+    
+    
 
     render() {
         return (
@@ -55,7 +72,11 @@ class Home extends Component {
             <Heading>Home</Heading>
     
             <div className="feed">
-                
+                <Ul>
+                    {this.state.feeds.map(post => <Li key={post.id}>{post.content}
+                    <Like likes={this.state.feeds.likes}/>
+                    </Li>)}
+                </Ul>
             </div>
             </>
         )
