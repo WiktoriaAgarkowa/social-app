@@ -76,7 +76,7 @@ class SignUp extends Component {
         }
 
         let error = true;
-        const oRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[\!\@\#\$\%\+\-\=])(?!.*\s).{6,}$/;
+        const oRegExp = /^(?=.*\d)(?=.*[a-z])(?=.*[\!\@\#\$\%])(?!.*\s).{6,}$/;
         let test = oRegExp.test(this._newPasswordInput.value)
         
 

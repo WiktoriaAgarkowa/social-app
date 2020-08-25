@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import axios from 'axios';
+// import axios from 'axios';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -78,6 +78,7 @@ class Like extends Component {
         })
 
         console.log(this.state.like)
+        console.log(this.props)
     }
 
     render() {
