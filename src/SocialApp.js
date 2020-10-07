@@ -141,7 +141,7 @@ class SocialApp extends Component {
               <Switch>
         
                 <Route exact path="/">
-                  <Home />
+                  <Home token = {this.state.sessionToken}/>
                 </Route>
         
                 <Route path="/signup">

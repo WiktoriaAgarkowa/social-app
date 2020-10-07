@@ -32,10 +32,14 @@ color: white;
 border: 0; 
 border-radius: 20px;
 transition: all 0.7s;
+
 &:hover {
     background-color: #892dcf;
     cursor: pointer;
 }
+
+&:focus {
+    outline: none;
 `;
 
 const Error = styled.p`
@@ -141,7 +145,7 @@ class SignUp extends Component {
                 .then((req)=> {
                     
                     this.props.setToken(req.data.jwt_token)
-                    this.props.changeLoginState(true);
+                    // this.props.changeLoginState(true);
 
                     this.setState({
                         username: "",

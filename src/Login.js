@@ -37,6 +37,9 @@ transition: all 0.7s;
     background-color: #892dcf;
     cursor: pointer;
 }
+
+&:focus {
+    outline: none;
 `;
 
 const Error = styled.p`
@@ -118,8 +121,8 @@ class LogIn extends Component {
     
             <form onSubmit={this.logInMethod}>
 
-                <Input onChange={this.inputChange} name="username" type="text" placeholder="Imię" />
-                <Input onChange={this.inputChange} name="password"  type="password" placeholder="Hasło" />
+                <Input onChange={this.inputChange} name="username" type="text" placeholder="Imię"/>
+                <Input onChange={this.inputChange} name="password"  type="password" placeholder="Hasło"/>
                 <Button type="submit">Log In</Button>
                 <Error>{this.state.errorMsg}</Error>
 

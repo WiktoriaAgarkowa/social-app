@@ -11,6 +11,11 @@ color: #1A181D;
 font-weight: 500;
 `;
 
+const Container = styled.div`
+display: flex;
+
+`;
+
 const Ul = styled.ul`
 list-style-type: none;
 padding: 0 40px;
@@ -60,6 +65,18 @@ transition: all 0.7s;
     background-color: #892dcf;
     cursor: pointer;
 }
+
+&:focus {
+    outline: none;
+}
+`;
+
+const Recommendations = styled.div`
+flex-basis: 10%;
+`;
+
+const Feed = styled.div`
+flex-basis: 90%;
 `;
 
 class Home extends Component {
@@ -81,7 +98,7 @@ class Home extends Component {
     componentDidMount() {
         this.user = JSON.parse(localStorage.getItem('user'))
         this.getPost();
-
+        
         // if(this.state.filter === true) {
         //     this.getPostNew();
         // } else {
@@ -121,6 +138,37 @@ class Home extends Component {
             
     }
 
+    showMore = () => {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        
+        axios.post(
+            'https://akademia108.pl/api/social-app/post/latest',
+            {},
+            {'headers': headers})
+            .then((res) => {
+                // console.log("RESPONSE RECEIVED: ", res.data);
+
+                let newPost = res.data;
+                
+                newPost.forEach(el => {
+                    this.state.feeds.push(el)
+                });
+
+                console.log(this.state.feeds)
+                
+                this.setState({feeds:this.state.feeds})
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+            })
+
+        
+        
+    }
+
     getPostNew = () => {
 
         const headers = {
@@ -153,7 +201,8 @@ class Home extends Component {
 
         const headers = {
             'Content-Type': 'application/json',
-            'Accept': 'application/json' + this.user.username
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + this.user.jwt_token
         }
         
         axios.post (
@@ -172,28 +221,35 @@ class Home extends Component {
 
     
 
+
+    
+
     render() {
+
+        let user = JSON.parse(localStorage.getItem('user'))
         
         return (
             <>
             <Heading>Home</Heading>
     
-            <div className="feed">
+            <Container>
+                <Feed className="feed">
 
-                <ButtonNew onClick={this.setFilter} >New posts</ButtonNew>
-                
-                <Ul>
-                    {this.state.feeds.map(post => <Li key={post.id}>{post.content} <br></br>
-                    
-                     <Like  likeValue = {this.state.feeds.map(like => like.likes)}/>
-                    </Li>)}
-                </Ul>
-                <Button>Show More</Button>
-            </div>
+                    <ButtonNew onClick={this.setFilter} >New posts</ButtonNew>
 
-            <div className="recommendations">
-                <Ul></Ul>
-            </div>
+                    <Ul>
+                        {this.state.feeds.map(post => <Li key={post.id}> {post.content} <br></br>
+                        
+                        <Like  likeValue = {this.state.feeds.map(like => like.likes)}/>
+                        </Li>)}
+                    </Ul>
+                    <Button onClick={this.showMore}>Show More</Button> 
+                    </Feed>
+
+                    <Recommendations className="recommendations">
+                    <Ul></Ul>
+                </Recommendations>
+            </Container>
             </>
         )
     }
