@@ -5,7 +5,7 @@ import logo from './logo.png'
 import Home from './Home';
 import SignUp from './SignUp';
 import Login from './Login';
-import LogOut from './LogOut'
+// import LogOut from './LogOut'
 
 import {
   BrowserRouter as Router,
@@ -14,24 +14,27 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
+import MyProfile from './MyProfile';
 
 
 
 const Menu = styled.ul`
 list-style: none;
 position: relative;
-background-color: #a538ff;
-color: white;
-text-align: center;
+display: flex;
+align-items: center;
+background-color: #fefcff;
 margin: 0;
 `;
 
 const Logo = styled.img`
 height: 60px;
-position: absolute;
-left: 150px;
-bottom: -5px;
-padding: 20px
+
+
+
+@media (max-width: 1230px) {
+  height: 30px;
+}
 `;
 
 const MenuItem = styled.li`
@@ -43,6 +46,18 @@ const LinkMenu = styled(Link)`
 text-decoration: none;
 color:white;
 text-transform: uppercase;
+color: #1A181D;
+font-weight: 500;
+`;
+
+const Log = styled(Link)`
+text-decoration: none;
+color: #1A181D;
+font-weight: 500;
+text-transform: uppercase;
+border: 2px solid #1A181D;
+padding: 10px 20px;
+border-radius: 20px;
 `;
 
 
@@ -123,15 +138,17 @@ class SocialApp extends Component {
                   
                   <Menu>
 
-                    <Logo src={logo} className="App-logo" alt="logo" />
+                    <MenuItem><LinkMenu to="/"> <Logo src={logo} className="App-logo" alt="logo" /></LinkMenu></MenuItem>
                     
-                    <MenuItem><LinkMenu to="/">Home</LinkMenu></MenuItem>
+                    {/* <MenuItem><LinkMenu to="/">Home</LinkMenu></MenuItem> */}
 
-                    {localStorage.token === undefined && <MenuItem><LinkMenu to="/signup">Sign Up</LinkMenu></MenuItem>}
+                    {!user && <MenuItem><LinkMenu to="/login">Log In</LinkMenu></MenuItem>}
 
-                    {!user && <MenuItem><LinkMenu to="/login">LogIn</LinkMenu></MenuItem>}
+                    {user && <MenuItem><LinkMenu to="/myprofile">My Profile</LinkMenu></MenuItem>}
 
-                    {user && <MenuItem><LinkMenu to="/" onClick={this.logOut}>LogOut</LinkMenu></MenuItem>}
+                    {user && <MenuItem><LinkMenu to="/" onClick={this.logOut}>Log Out</LinkMenu></MenuItem>}
+
+                    {localStorage.token === undefined && <MenuItem><Log to="/signup">Sign Up</Log></MenuItem>}
 
                   </Menu>
                 </nav>
@@ -152,8 +169,8 @@ class SocialApp extends Component {
                  {this.state.login ? <Redirect to="/" /> : <Login setToken={this.setSessionState} changeLoginState={this.setLogin}/>}
                 </Route>
 
-                <Route path="/">
-                  <LogOut />
+                <Route path="/myprofile">
+                  <MyProfile />
                 </Route>
 
         

@@ -48,6 +48,11 @@ color:red;
 font-size: 13px;
 `;
 
+const P = styled.p`
+text-align: center;
+font-family: 'Inconsolata', monospace;
+font-size: 14px`
+
 class LogIn extends Component {
     constructor(props){
         super(props);
@@ -127,6 +132,8 @@ class LogIn extends Component {
                 <Error>{this.state.errorMsg}</Error>
 
             </form>
+
+            <P>Use name: adam, password: 1234</P>
             </>
         )
     }

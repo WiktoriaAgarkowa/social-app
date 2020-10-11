@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-// import axios from 'axios';
+import axios from 'axios';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -32,61 +32,85 @@ class Like extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            like: 0,
+            like: this.props.likeValue,
             likeState: false
         }
     }
 
-    // sendLikeToServer = () => {
+    sendLikeToServer = () => {
+        this.user = JSON.parse(localStorage.getItem('user'))
 
-    //     const headers = {
-    //         'Content-Type': 'application/json',
-    //         'Accept': 'application/json'
-    //     }
-
-    //     axios.post('https://akademia108.pl/api/social-app/post/like',
-    //                 {post_id: 40},
-    //                 {'headers': headers})
-    //                 .then((res)=> {
-
-    //                     console.log("RESPONSE RECEIVED: ", res);
-    //                 }).catch((error) => {
-    //                     console.error(error);
-    //                 })
-        
-    // }
-
-    addLike = () => {
-
-        this.setState((prevState) => {
-
-            let likeValue = prevState.like;
-
-        if (this.state.likeState === false) {
-            likeValue += 1;
-            this.setState({likeState: true})
-            // this.sendLikeToServer();
-        } else {
-            likeValue -= 1;
-            this.setState({likeState: false})
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + this.user.jwt_token
         }
 
-        return (
-            {like: likeValue}
-        )
+        axios.post('https://akademia108.pl/api/social-app/post/like',
+                    {post_id: 545},
+                    {'headers': headers})
+                    .then((res)=> {
 
-        })
-
-        console.log(this.state.like)
-        console.log(this.props)
+                        console.log("RESPONSE RECEIVED: ", res);
+                    }).catch((error) => {
+                        console.error(error);
+                    })
+        
     }
+
+    removeLikeFromServer = () => {
+        this.user = JSON.parse(localStorage.getItem('user'))
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + this.user.jwt_token
+        }
+
+        axios.post('https://akademia108.pl/api/social-app/post/dislike',
+                    {post_id: 40},
+                    {'headers': headers})
+                    .then((res)=> {
+
+                        console.log("RESPONSE RECEIVED: ", res);
+                    }).catch((error) => {
+                        console.error(error);
+                    })
+        
+    }
+
+    // addLike = () => {
+
+    //     this.setState((prevState) => {
+
+    //         let likeValue = prevState.like;
+
+    //     if (this.state.likeState === false) {
+    //         likeValue += 1;
+    //         this.setState({likeState: true})
+    //         // this.sendLikeToServer();
+    //     } else {
+    //         likeValue -= 1;
+    //         this.setState({likeState: false})
+    //     }
+
+    //     return (
+    //         {like: likeValue}
+    //     )
+
+    //     })
+
+    //     console.log(this.state.like)
+    //     console.log(this.props)
+    // }
 
     render() {
         return(
             <>
                 <Container>
                     <LikeValue>{this.state.like} </LikeValue>
-                    <LikeButton type="submit" onClick={this.addLike}><Heart icon="heart" /></LikeButton>
+                    <LikeButton type="submit" onClick={this.sendLikeToServer}><Heart icon="heart" /></LikeButton>
+                    {/* <LikeButton type="submit" onClick={this.removeLikeFromServer}><Heart icon="heart" /></LikeButton> */}
                 </Container>
             </>
         )
