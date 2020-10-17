@@ -1,27 +1,28 @@
 {
   "files": {
-    "main.css": "/WiktoriaAgarkowa/social-app/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/WiktoriaAgarkowa/social-app/static/js/main.3b5ddce5.chunk.js",
-    "main.js.map": "/WiktoriaAgarkowa/social-app/static/js/main.3b5ddce5.chunk.js.map",
+    "main.css": "/WiktoriaAgarkowa/social-app/static/css/main.ae8ab0c7.chunk.css",
+    "main.js": "/WiktoriaAgarkowa/social-app/static/js/main.487c2979.chunk.js",
+    "main.js.map": "/WiktoriaAgarkowa/social-app/static/js/main.487c2979.chunk.js.map",
     "runtime-main.js": "/WiktoriaAgarkowa/social-app/static/js/runtime-main.01641469.js",
     "runtime-main.js.map": "/WiktoriaAgarkowa/social-app/static/js/runtime-main.01641469.js.map",
     "static/css/2.02491d9c.chunk.css": "/WiktoriaAgarkowa/social-app/static/css/2.02491d9c.chunk.css",
-    "static/js/2.774b9a1e.chunk.js": "/WiktoriaAgarkowa/social-app/static/js/2.774b9a1e.chunk.js",
-    "static/js/2.774b9a1e.chunk.js.map": "/WiktoriaAgarkowa/social-app/static/js/2.774b9a1e.chunk.js.map",
+    "static/js/2.c62b544d.chunk.js": "/WiktoriaAgarkowa/social-app/static/js/2.c62b544d.chunk.js",
+    "static/js/2.c62b544d.chunk.js.map": "/WiktoriaAgarkowa/social-app/static/js/2.c62b544d.chunk.js.map",
     "index.html": "/WiktoriaAgarkowa/social-app/index.html",
-    "precache-manifest.08d19da6288a8b6e368b59f8e7af9d92.js": "/WiktoriaAgarkowa/social-app/precache-manifest.08d19da6288a8b6e368b59f8e7af9d92.js",
+    "precache-manifest.c86514dec07db96898e9f8fed56c5940.js": "/WiktoriaAgarkowa/social-app/precache-manifest.c86514dec07db96898e9f8fed56c5940.js",
     "service-worker.js": "/WiktoriaAgarkowa/social-app/service-worker.js",
     "static/css/2.02491d9c.chunk.css.map": "/WiktoriaAgarkowa/social-app/static/css/2.02491d9c.chunk.css.map",
-    "static/css/main.5ecd60fb.chunk.css.map": "/WiktoriaAgarkowa/social-app/static/css/main.5ecd60fb.chunk.css.map",
-    "static/js/2.774b9a1e.chunk.js.LICENSE.txt": "/WiktoriaAgarkowa/social-app/static/js/2.774b9a1e.chunk.js.LICENSE.txt",
+    "static/css/main.ae8ab0c7.chunk.css.map": "/WiktoriaAgarkowa/social-app/static/css/main.ae8ab0c7.chunk.css.map",
+    "static/js/2.c62b544d.chunk.js.LICENSE.txt": "/WiktoriaAgarkowa/social-app/static/js/2.c62b544d.chunk.js.LICENSE.txt",
     "static/media/font-awesome.min.css": "/WiktoriaAgarkowa/social-app/static/media/fontawesome-webfont.fee66e71.woff",
-    "static/media/logo.png": "/WiktoriaAgarkowa/social-app/static/media/logo.1e7bd107.png"
+    "static/media/logo-min.png": "/WiktoriaAgarkowa/social-app/static/media/logo-min.769824e7.png",
+    "static/media/logo.png": "/WiktoriaAgarkowa/social-app/static/media/logo.45e9989c.png"
   },
   "entrypoints": [
     "static/js/runtime-main.01641469.js",
     "static/css/2.02491d9c.chunk.css",
-    "static/js/2.774b9a1e.chunk.js",
-    "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.3b5ddce5.chunk.js"
+    "static/js/2.c62b544d.chunk.js",
+    "static/css/main.ae8ab0c7.chunk.css",
+    "static/js/main.487c2979.chunk.js"
   ]
 }

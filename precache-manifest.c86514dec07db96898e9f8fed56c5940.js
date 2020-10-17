@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "47bd450b2661e6252d3ecba08cef94f3",
+    "revision": "0b4e2e7043e5bac4758868ce66227be2",
     "url": "/WiktoriaAgarkowa/social-app/index.html"
   },
   {
-    "revision": "6f42a693a0b05d7a4d13",
+    "revision": "7d64912c284946e251f6",
     "url": "/WiktoriaAgarkowa/social-app/static/css/2.02491d9c.chunk.css"
   },
   {
-    "revision": "76e8d8c3cf2d33643b32",
-    "url": "/WiktoriaAgarkowa/social-app/static/css/main.5ecd60fb.chunk.css"
+    "revision": "a5c9a1ab5fb68040df3c",
+    "url": "/WiktoriaAgarkowa/social-app/static/css/main.ae8ab0c7.chunk.css"
   },
   {
-    "revision": "6f42a693a0b05d7a4d13",
-    "url": "/WiktoriaAgarkowa/social-app/static/js/2.774b9a1e.chunk.js"
+    "revision": "7d64912c284946e251f6",
+    "url": "/WiktoriaAgarkowa/social-app/static/js/2.c62b544d.chunk.js"
   },
   {
     "revision": "c64c486544348f10a6d6c716950bc223",
-    "url": "/WiktoriaAgarkowa/social-app/static/js/2.774b9a1e.chunk.js.LICENSE.txt"
+    "url": "/WiktoriaAgarkowa/social-app/static/js/2.c62b544d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "76e8d8c3cf2d33643b32",
-    "url": "/WiktoriaAgarkowa/social-app/static/js/main.3b5ddce5.chunk.js"
+    "revision": "a5c9a1ab5fb68040df3c",
+    "url": "/WiktoriaAgarkowa/social-app/static/js/main.487c2979.chunk.js"
   },
   {
     "revision": "8cf2cb220e6df0bfdf7c",
@@ -48,7 +48,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/WiktoriaAgarkowa/social-app/static/media/fontawesome-webfont.fee66e71.woff"
   },
   {
-    "revision": "1e7bd107d934683be9313f8d457d0f33",
-    "url": "/WiktoriaAgarkowa/social-app/static/media/logo.1e7bd107.png"
+    "revision": "769824e7b70019956886fc52c41ff6ac",
+    "url": "/WiktoriaAgarkowa/social-app/static/media/logo-min.769824e7.png"
+  },
+  {
+    "revision": "45e9989c96106a380eac70a41e1097c0",
+    "url": "/WiktoriaAgarkowa/social-app/static/media/logo.45e9989c.png"
   }
 ]);

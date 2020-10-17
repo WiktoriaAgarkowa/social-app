@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/WiktoriaAgarkowa/social-app/precache-manifest.08d19da6288a8b6e368b59f8e7af9d92.js"
+  "/WiktoriaAgarkowa/social-app/precache-manifest.c86514dec07db96898e9f8fed56c5940.js"
 );
 
 self.addEventListener('message', (event) => {
