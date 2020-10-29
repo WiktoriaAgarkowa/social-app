@@ -15,7 +15,7 @@ const Container = styled.div`
 display: flex;
 justify-content: center;
 list-style-type: none;
-width: 50%;
+width: 10%;
 margin: auto;
 `;
 
@@ -30,6 +30,30 @@ const Name = styled.p`
 font-family: 'Inconsolata', monospace;
 text-align: center;
 margin:0;
+`;
+
+const Follow = styled.button`
+background-color: #fefcff;
+border: 0;
+border-bottom: 1px solid #dfdae1;
+border-radius: 10px; 
+padding: 10px 20px;
+color: #1A181D;
+font-family: 'Inconsolata', monospace;
+transition: all 0.35s;
+display: block;
+margin: auto;
+margin-top: 20px;
+
+&:hover {
+    background-color: #892dcf;
+    color:#fefcff;
+    cursor: pointer;
+}
+
+&:focus {
+    outline: none;
+}
 `;
 
 const Ul = styled.ul`
@@ -102,9 +126,13 @@ class MyProfile extends Component {
 
     componentDidMount() {
         this.following();
+        console.log(this.state.folowing)
     }
 
-    addPost = () => {
+    addPost = (e) => {
+
+        e.preventDefault();
+
         this.user = JSON.parse(localStorage.getItem('user'))
 
         const headers = {
@@ -116,13 +144,15 @@ class MyProfile extends Component {
         axios.post (
             'https://akademia108.pl/api/social-app/post/add',
             {
-                "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et odio pellentesque diam volutpat commodo sed. Donec ac odio tempor orci dapibus. Sit amet mauris commodo quis imperdiet massa tincidunt nunc pulvinar. Quis enim lobortis scelerisque fermentum dui faucibus in ornare quam. Etiam erat velit scelerisque in dictum. Vestibulum rhoncus est pellentesque elit ullamcorper dignissim cras. Risus nullam eget felis eget nunc lobortis mattis aliquam faucibus. A condimentum vitae sapien pellentesque habitant. Pharetra magna ac placerat vestibulum lectus. Senectus et netus et malesuada fames ac turpis egestas. Iaculis nunc sed augue lacus viverra vitae congue eu. Viverra suspendisse potenti nullam ac tortor vitae purus. Eu consequat ac felis donec et odio pellentesque."
+                "content": this._inputName.value
             },
             {'headers': headers})
             .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res.data);
 
                 this.setState({posts: res.data})
+
+                this._inputName.value = "";
             })
             .catch((err) => {
                 console.log("AXIOS ERROR: ", err);
@@ -156,7 +186,7 @@ class MyProfile extends Component {
 
     unfollow = (el) => {
         this.user = JSON.parse(localStorage.getItem('user'))
-
+        console.log(this.state.folowing)
         const headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -172,7 +202,7 @@ class MyProfile extends Component {
             .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res.data);
 
-                this.setState({folowing: res.data})
+                this.following();
             })
             .catch((err) => {
                 console.log("AXIOS ERROR: ", err);
@@ -189,26 +219,20 @@ class MyProfile extends Component {
             <Heading>Hi, {this.user.username}!</Heading>
 
             <Container>
-            {this.state.folowing.map(acc => <div key={acc.id}><Avatar src={acc.avatar_url}></Avatar> <br></br>
+            {this.state.folowing.map(folower => <div key={folower.id}><Avatar src={folower.avatar_url}></Avatar> <br></br>
+            
             <Name>
-                {acc.username}
+                {folower.username}
             </Name>
 
-            <button>Unfollow</button>
+            <Follow onClick={() => this.unfollow(folower.id)}>Unfollow</Follow>
             </div>)}
             
             </Container>
 
             <form onSubmit={this.addPost}>
-            <Ul>
-            {/* {this.state.posts.map(post => <Li key={post.id}>{post.content.map(
-                function(el) {
-                    el.content
-                }
-            )}<br></br>
-            </Li>)} */}
-            </Ul>
-            <Text placeholder="What's interesting You want to say?"></Text>
+            
+            <Text ref={(element) => {this._inputName = element;}} placeholder="What's interesting You want to say?"></Text>
             <br></br>
             <ButtonNew type="submit">Public</ButtonNew>
             </form>

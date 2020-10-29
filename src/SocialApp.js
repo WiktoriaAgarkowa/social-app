@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import logo from './logo.png'
+import logo from './logo.png';
+import logomin from './logo-min.png';
 import Home from './Home';
 import SignUp from './SignUp';
 import Login from './Login';
-// import LogOut from './LogOut'
+import LogOut from './LogOut';
 
 import {
   BrowserRouter as Router,
@@ -22,24 +23,41 @@ const Menu = styled.ul`
 list-style: none;
 position: relative;
 display: flex;
+
 align-items: center;
 background-color: #fefcff;
 margin: 0;
+padding: 0;
 `;
 
 const Logo = styled.img`
 height: 60px;
 
-
+@media (max-width: 1230px) {
+  height: 30px;
+}
 
 @media (max-width: 1230px) {
+  display: none;
+}
+`;
+
+const LogoMin = styled.img`
+display:none;
+
+@media (max-width: 1230px) {
+  display: block;
   height: 30px;
 }
 `;
 
 const MenuItem = styled.li`
-display: inline-block;
 padding: 30px 30px;
+`;
+
+const MenuItemLogo = styled.li`
+padding: 0;
+padding-left: 5%;
 `;
 
 const LinkMenu = styled(Link)`
@@ -60,6 +78,11 @@ padding: 10px 20px;
 border-radius: 20px;
 `;
 
+const LogLi = styled.li`
+padding: 30px 30px;
+flex-basis: 50%;
+text-align: right;
+`;
 
 
 class SocialApp extends Component {
@@ -91,12 +114,13 @@ class SocialApp extends Component {
     }
 
     logOut = () => {
-      this.user = JSON.parse(localStorage.getItem('user'))
+      let user = JSON.parse(localStorage.getItem('user'))
+      console.log(user)
 
       let headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + this.user.jwt_token
+        'Authorization': 'Bearer ' + user.jwt_token
     };
 
     axios.post(
@@ -128,53 +152,58 @@ class SocialApp extends Component {
 
     render() {
       let user = JSON.parse(localStorage.getItem('user'));
-
+      
         return (
           
             <Router>
               
               <div className="App">
-              <nav>
+                <nav>
                   
                   <Menu>
 
-                    <MenuItem><LinkMenu to="/"> <Logo src={logo} className="App-logo" alt="logo" /></LinkMenu></MenuItem>
-                    
-                    {/* <MenuItem><LinkMenu to="/">Home</LinkMenu></MenuItem> */}
+                    <MenuItemLogo><LinkMenu to="/"> <Logo src={logo} className="App-logo" alt="logo" /></LinkMenu></MenuItemLogo>
+                    <MenuItemLogo><LinkMenu to="/"> <LogoMin src={logomin} className="App-logo" alt="logo" /></LinkMenu></MenuItemLogo>
 
                     {!user && <MenuItem><LinkMenu to="/login">Log In</LinkMenu></MenuItem>}
 
                     {user && <MenuItem><LinkMenu to="/myprofile">My Profile</LinkMenu></MenuItem>}
 
-                    {user && <MenuItem><LinkMenu to="/" onClick={this.logOut}>Log Out</LinkMenu></MenuItem>}
+                    {user && <LogLi><LinkMenu to="/" onClick={this.logOut}>Log Out</LinkMenu></LogLi>}
 
-                    {localStorage.token === undefined && <MenuItem><Log to="/signup">Sign Up</Log></MenuItem>}
+                    {localStorage.token === undefined && <LogLi><Log to="/signup">Sign Up</Log></LogLi>}
 
                   </Menu>
+                  
                 </nav>
+
+                
+                
+                </div>
               
-              </div>
         
-              <Switch>
-        
-                <Route exact path="/">
-                  <Home token = {this.state.sessionToken}/>
-                </Route>
-        
-                <Route path="/signup">
-                  {this.state.login ? <Redirect to="/" /> : <SignUp setToken={this.setSessionState} changeLoginState={this.setLogin} />}
-                </Route>
-        
-                <Route path="/login">
-                 {this.state.login ? <Redirect to="/" /> : <Login setToken={this.setSessionState} changeLoginState={this.setLogin}/>}
-                </Route>
+                <Switch>
+          
+                  <Route exact path="/">
+                    <Home token = {this.state.sessionToken}/>
+                  </Route>
+          
+                  <Route path="/signup">
+                    {this.state.login ? <Redirect to="/" /> : <SignUp setToken={this.setSessionState} changeLoginState={this.setLogin} />}
+                  </Route>
+          
+                  <Route path="/login">
+                  {this.state.login ? <Redirect to="/" /> : <Login setToken={this.setSessionState} changeLoginState={this.setLogin}/>}
+                  </Route>
 
-                <Route path="/myprofile">
-                  <MyProfile />
-                </Route>
+                  <Route path="/myprofile">
+                    <MyProfile />
+                  </Route>
 
-        
-              </Switch> 
+          
+                </Switch> 
+
+              
         
             </Router>
           );

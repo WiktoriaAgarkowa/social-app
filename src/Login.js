@@ -122,7 +122,7 @@ class LogIn extends Component {
         return (
             <>
     
-            <Heading>Zaloguj Się</Heading>
+            <Heading>Log In</Heading>
     
             <form onSubmit={this.logInMethod}>
 

@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Like from './Like';
 
+
 const Heading = styled.h1`
 text-align: center;
 font-family: 'Inconsolata', monospace;
 padding: 40px;
 color: #1A181D;
 font-weight: 500;
+margin: 0;
 `;
 
 const Container = styled.div`
@@ -141,6 +143,7 @@ margin: auto;
 
 const Feed = styled.div`
 flex-basis: 80%;
+z-index: 10;
 
 @media (max-width: 1230px) {
     flex-basis: 100%
@@ -166,12 +169,9 @@ class Home extends Component {
         this.state = {
             feeds: [],
             filter: false,
-            reccomendations: []
+            reccomendations: [],
+            newSubscribes: []
         }
-    }
-
-    setFilter = () => {
-        this.setState({filter: true})
     }
 
     
@@ -179,12 +179,6 @@ class Home extends Component {
     componentDidMount() {
         this.user = JSON.parse(localStorage.getItem('user'))
         this.getPost();
-        
-        // if(this.state.filter === true) {
-        //     this.getPostNew();
-        // } else {
-        //     this.getPost();
-        // }
         
         if(this.user) {
             this.getRecommendations();
@@ -302,7 +296,7 @@ class Home extends Component {
                 
     }
 
-    follow = () => {
+    follow = (e) => {
 
         this.user = JSON.parse(localStorage.getItem('user'))
 
@@ -315,12 +309,12 @@ class Home extends Component {
         axios.post (
             'https://akademia108.pl/api/social-app/follows/follow',
             {
-                "leader_id": 4
+                "leader_id": e
             },
             {'headers': headers})
             .then((res) => {
                 console.log("RESPONSE RECEIVED RECOMMENDATIONS: ", res.data);
-
+                this.getRecommendations();
             })
             .catch((err) => {
                 console.log("AXIOS ERROR: ", err);
@@ -346,8 +340,6 @@ class Home extends Component {
 
                 <Feed className="feed">
 
-                    {/* <ButtonNew onClick={this.setFilter} >New posts</ButtonNew> */}
-
                     <Ul>
                         {this.state.feeds.map(post => <Li key={post.id}>{post.content}<br></br>
                        
@@ -361,7 +353,7 @@ class Home extends Component {
                         <UlRec>{this.state.reccomendations.map(user => <LiRec key={user.id}>
                             <Avatar src={user.avatar_url}></Avatar>
                         <Name>{user.username}</Name>
-                        <Follow onClick={this.follow}>Follow</Follow>
+                        <Follow onClick={() => this.follow(user.id)}>Follow</Follow>
                         </LiRec>)}</UlRec>
                 </Recommendations>}
 
