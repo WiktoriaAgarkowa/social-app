@@ -52,6 +52,7 @@ class Like extends Component {
                     .then((res)=> {
 
                         console.log("RESPONSE RECEIVED: ", res);
+                        this.setState({likeState: true})
                     }).catch((error) => {
                         console.error(error);
                     })
@@ -73,45 +74,46 @@ class Like extends Component {
                     .then((res)=> {
 
                         console.log("RESPONSE RECEIVED: ", res);
+                        this.setState({likeState: false})
+
                     }).catch((error) => {
                         console.error(error);
                     })
         
     }
 
-    // addLike = () => {
+    like = () => {
 
-    //     this.setState((prevState) => {
+        this.setState((prevState) => {
 
-    //         let likeValue = prevState.like;
+            let likeValue = prevState.like;
 
-    //     if (this.state.likeState === false) {
-    //         likeValue += 1;
-    //         this.setState({likeState: true})
-    //         // this.sendLikeToServer();
-    //     } else {
-    //         likeValue -= 1;
-    //         this.setState({likeState: false})
-    //     }
+        if (this.state.likeState === false) {
+            likeValue += 1;
+            this.sendLikeToServer();
+        } else {
+            likeValue -= 1;
+            this.removeLikeFromServer();
+        }
 
-    //     return (
-    //         {like: likeValue}
-    //     )
+        return (
+            {like: likeValue}
+        )
 
-    //     })
+        })
 
-    //     console.log(this.state.like)
-    //     console.log(this.props)
-    // }
+        console.log(this.state.like)
+        console.log(this.props)
+    }
 
     render() {
         return(
             <>
                 <Container>
                     <LikeValue>{this.state.like} </LikeValue>
-                    <LikeButton type="submit" onClick={this.sendLikeToServer}><Heart icon="heart" /></LikeButton>
-                    {/* <LikeButton type="submit" onClick={this.removeLikeFromServer}><Heart icon="heart" /></LikeButton> */}
+                    <LikeButton type="submit" onClick={this.like}><Heart icon="heart" /></LikeButton>
                 </Container>
+        
             </>
         )
     }
