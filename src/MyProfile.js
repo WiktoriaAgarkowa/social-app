@@ -225,7 +225,7 @@ class MyProfile extends Component {
                 {folower.username}
             </Name>
 
-            <Follow onClick={() => this.unfollow(folower.id)}>Unfollow</Follow>
+            <Follow onClick={() => this.unfollow(folower.id)} onTouchStart={() => this.unfollow(folower.id)}>Unfollow</Follow>
             </div>)}
             
             </Container>

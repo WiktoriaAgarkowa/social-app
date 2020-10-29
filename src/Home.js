@@ -353,7 +353,7 @@ class Home extends Component {
                         <UlRec>{this.state.reccomendations.map(user => <LiRec key={user.id}>
                             <Avatar src={user.avatar_url}></Avatar>
                         <Name>{user.username}</Name>
-                        <Follow onClick={() => this.follow(user.id)}>Follow</Follow>
+                        <Follow onClick={() => this.follow(user.id)}onTouchStart={() => this.follow(user.id)}>Follow</Follow>
                         </LiRec>)}</UlRec>
                 </Recommendations>}
 
