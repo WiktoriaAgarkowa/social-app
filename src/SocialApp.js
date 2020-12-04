@@ -92,6 +92,12 @@ background: linear-gradient(90deg, rgba(225,88,255,1) 0%, rgba(165,56,255,1) 68%
 position: relative;
 margin: auto;
 border-radius: 30px;
+padding: 20px;
+
+@media (max-width: 1230px) {
+  padding: 0;
+  width: 90%;
+}
 `;
 
 const Heading = styled.h1`
@@ -102,14 +108,22 @@ margin: auto;
 text-align: center;
 font-family: 'Inconsolata', monospace;
 font-weight: 300;
+
+@media (max-width: 1230px) {
+  padding: 20px 0;
+}
 `;
 
 const Text = styled.p`
 color: #fff;
 padding: 20px;
-text-align: center;
+text-align: justify;
 font-family: 'Inconsolata', monospace;
 font-weight: 300;
+
+@media (max-width: 1230px) {
+  padding: 10px 20px 40px 20px;
+}
 `;
 
 
