@@ -21,6 +21,11 @@ display: inline-block;
 const Heart = styled(FontAwesomeIcon)`
 color: #ff3b80;
 font-size: 20px;
+
+&:hover {
+    color: #f00;
+    cursor: pointer;
+}
 `;
 
 const LikeValue = styled.p`
@@ -86,15 +91,18 @@ class Like extends Component {
 
         this.setState((prevState) => {
 
+            let user = JSON.parse(localStorage.getItem('user'));
             let likeValue = prevState.like;
 
-        if (this.state.likeState === false) {
-            likeValue += 1;
-            this.sendLikeToServer();
-        } else {
-            likeValue -= 1;
-            this.removeLikeFromServer();
-        }
+        if(user) {
+            if (this.state.likeState === false) {
+                likeValue += 1;
+                this.sendLikeToServer();
+            } else {
+                likeValue -= 1;
+                this.removeLikeFromServer();
+            }
+        } if (!user) return
 
         return (
             {like: likeValue}

@@ -8,6 +8,7 @@ const Heading = styled.h1`
 text-align: center;
 font-family: 'Inconsolata', monospace;
 padding: 40px;
+position: relative;
 color: #1A181D;
 font-weight: 500;
 margin: 0;
@@ -59,26 +60,6 @@ font-family: 'Inconsolata', monospace;
 &:hover{
     cursor: pointer;
     background-color: #f2f1f2;
-}
-
-&:focus {
-    outline: none;
-}
-`;
-
-const ButtonNew = styled.button`
-background-color: #a538ff;
-border: 0;
-border-radius: 20px; 
-margin-left: 40px;
-padding: 10px;
-color: #fff;
-font-family: 'Inconsolata', monospace;
-transition: all 0.7s;
-
-&:hover {
-    background-color: #892dcf;
-    cursor: pointer;
 }
 
 &:focus {
@@ -143,7 +124,7 @@ margin: auto;
 
 const Feed = styled.div`
 flex-basis: 80%;
-z-index: 10;
+
 
 @media (max-width: 1230px) {
     flex-basis: 100%
@@ -180,6 +161,7 @@ class Home extends Component {
         this.user = JSON.parse(localStorage.getItem('user'))
         this.getPost();
         
+        this.props.updateStatus(true)
         if(this.user) {
             this.getRecommendations();
         } else {
@@ -334,7 +316,9 @@ class Home extends Component {
         
         return (
             <>
+            <div>
             <Heading>Home</Heading>
+            </div>
     
             <Container>
 

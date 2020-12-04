@@ -64,6 +64,10 @@ class LogIn extends Component {
         }
     }
 
+    componentDidMount() {
+        this.props.updateStatus(true)
+    }
+
     inputChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
@@ -102,7 +106,7 @@ class LogIn extends Component {
                     });
                 } else {
                     this.props.setToken(req.data.jwt_token);
-
+                    console.log(req.data)
                     localStorage.setItem('user', JSON.stringify(req.data));
 
                     this.props.changeLoginState(true);

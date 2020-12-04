@@ -62,6 +62,10 @@ class SignUp extends Component {
         };
     };
 
+    componentDidMount() {
+        this.props.updateStatus(true)
+    }
+
     inputChange = (event) => {
 
         this.setState({

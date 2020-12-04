@@ -6,7 +6,7 @@ import logomin from './logo-min.png';
 import Home from './Home';
 import SignUp from './SignUp';
 import Login from './Login';
-import LogOut from './LogOut';
+import MyProfile from './MyProfile';
 
 import {
   BrowserRouter as Router,
@@ -15,7 +15,7 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import MyProfile from './MyProfile';
+
 
 
 
@@ -23,11 +23,12 @@ const Menu = styled.ul`
 list-style: none;
 position: relative;
 display: flex;
-
+width: 100%;
 align-items: center;
 background-color: #fefcff;
 margin: 0;
-padding: 0;
+padding: 20px 0;
+
 `;
 
 const Logo = styled.img`
@@ -84,6 +85,33 @@ flex-basis: 50%;
 text-align: right;
 `;
 
+const Welcome = styled.div`
+width: 500px;
+background: rgb(225,88,255);
+background: linear-gradient(90deg, rgba(225,88,255,1) 0%, rgba(165,56,255,1) 68%);
+position: relative;
+margin: auto;
+border-radius: 30px;
+`;
+
+const Heading = styled.h1`
+color: #fff;
+padding: 20px;
+width: 300px;
+margin: auto;
+text-align: center;
+font-family: 'Inconsolata', monospace;
+font-weight: 300;
+`;
+
+const Text = styled.p`
+color: #fff;
+padding: 20px;
+text-align: center;
+font-family: 'Inconsolata', monospace;
+font-weight: 300;
+`;
+
 
 class SocialApp extends Component {
     constructor() {
@@ -92,7 +120,8 @@ class SocialApp extends Component {
           login: (this.user)?true:false,
           username: '',
           email: '',
-          sessionToken: ''
+          sessionToken: '',
+          // start: false
         }
     }
 
@@ -150,6 +179,14 @@ class SocialApp extends Component {
       });
     }
 
+    setStatus = (action) => {
+      this.setState(prevState => {
+        return( {
+          start: action
+        });
+      });
+    }
+
     render() {
       let user = JSON.parse(localStorage.getItem('user'));
       
@@ -176,7 +213,13 @@ class SocialApp extends Component {
                   </Menu>
                   
                 </nav>
-
+                
+                {!this.state.start && <Welcome>
+                    <Heading>Hi! Welcome to my Social App :)</Heading>
+                    <Text>
+                      Please <LinkMenu onClick={this.setStatus} to="/login">Log In</LinkMenu> if You already have account and <LinkMenu onClick={this.setStatus} to="/signup">Sign Up</LinkMenu> if You not :)
+                    </Text>
+                </Welcome>}
                 
                 
                 </div>
@@ -185,15 +228,15 @@ class SocialApp extends Component {
                 <Switch>
           
                   <Route exact path="/">
-                    <Home token = {this.state.sessionToken}/>
+                    <Home token = {this.state.sessionToken} updateStatus={this.setStatus}/>
                   </Route>
           
                   <Route path="/signup">
-                    {this.state.login ? <Redirect to="/" /> : <SignUp setToken={this.setSessionState} changeLoginState={this.setLogin} />}
+                    {this.state.login ? <Redirect to="/" /> : <SignUp updateStatus={this.setStatus} setToken={this.setSessionState} changeLoginState={this.setLogin} />}
                   </Route>
           
                   <Route path="/login">
-                  {this.state.login ? <Redirect to="/" /> : <Login setToken={this.setSessionState} changeLoginState={this.setLogin}/>}
+                  {this.state.login ? <Redirect to="/" /> : <Login updateStatus={this.setStatus} setToken={this.setSessionState} changeLoginState={this.setLogin}/>}
                   </Route>
 
                   <Route path="/myprofile">
