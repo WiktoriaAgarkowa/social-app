@@ -133,6 +133,7 @@ class SocialApp extends Component {
         this.state = {
           login: (this.user)?true:false,
           username: '',
+          passwor: '',
           email: '',
           sessionToken: '',
           start: false
@@ -144,11 +145,11 @@ class SocialApp extends Component {
       const token = localStorage.getItem('token');
       if (token && !this.state.sessionToken) {
         this.setState ({sessionToken: token});
-
+        console.log('lalalal token')
         
           let logInUser = {
-            username: this.state.username,
-            password: this.state.password,
+            username: 'adam',
+            password: '1234',
             ttl: 3600
           };
 
