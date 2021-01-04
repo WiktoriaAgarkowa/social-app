@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import logo from './logo.png';
 import logomin from './logo-min.png';
-import Home from './Home';
+import Home from './Feed/Home';
 import SignUp from './SignUp';
 import Login from './Login';
 import MyProfile from './MyProfile';
@@ -140,9 +140,35 @@ class SocialApp extends Component {
     }
 
     componentDidMount() {
+
       const token = localStorage.getItem('token');
       if (token && !this.state.sessionToken) {
         this.setState ({sessionToken: token});
+
+        
+          let logInUser = {
+            username: this.state.username,
+            password: this.state.password,
+            ttl: 3600
+          };
+
+          let headers = {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Bearer ' + <jwtToken />
+          };
+
+          axios.post(
+            'https://akademia108.pl/api/social-app/user/login',
+            JSON.stringify(logInUser),
+            {'headers': headers})
+            .then((req) => {
+              this.setState({login: true})
+              console.log(req.data)
+            }).catch((error) => {
+              console.error(error);
+            })
+          
       }
     }
 
