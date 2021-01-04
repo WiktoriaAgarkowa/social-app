@@ -119,7 +119,7 @@ class Like extends Component {
             <>
                 <Container>
                     <LikeValue>{this.state.like} </LikeValue>
-                    <LikeButton type="submit" onClick={this.like}><Heart icon="heart" /></LikeButton>
+                    <LikeButton type="submit" onClick={this.like} onTouchStart={this.like}><Heart icon="heart" /></LikeButton>
                 </Container>
         
             </>

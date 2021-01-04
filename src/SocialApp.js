@@ -6,7 +6,7 @@ import logomin from './logo-min.png';
 import Home from './Feed/Home';
 import SignUp from './SignUp';
 import Login from './Login';
-import MyProfile from './MyProfile';
+import MyProfile from './Profile/MyProfile';
 
 import {
   BrowserRouter as Router,
