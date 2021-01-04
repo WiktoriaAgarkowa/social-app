@@ -133,7 +133,6 @@ class SocialApp extends Component {
         this.state = {
           login: (this.user)?true:false,
           username: '',
-          passwor: '',
           email: '',
           sessionToken: '',
           start: false
