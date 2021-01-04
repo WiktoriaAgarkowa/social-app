@@ -135,7 +135,7 @@ class SocialApp extends Component {
           username: '',
           email: '',
           sessionToken: '',
-          // start: false
+          start: false
         }
     }
 
