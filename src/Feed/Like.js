@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Container = styled.div`
 display: flex;
-
+justify-content: flex-end;
 `;
 
 const LikeButton = styled.button`

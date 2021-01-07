@@ -1,130 +1,32 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import styled from 'styled-components';
-import logo from './logo.png';
-import logomin from './logo-min.png';
-import Home from './Feed/Home';
-import SignUp from './SignUp';
-import Login from './Login';
-import MyProfile from './Profile/MyProfile';
+import logo from './navigation/logo.png';
+import logomin from './navigation/logo-min.png';
+import Home from './feed/Home';
+import SignUp from './navigation/SignUp';
+import Login from './navigation/Login';
+import MyProfile from './profile/MyProfile';
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect
 } from "react-router-dom";
 
-
-
-
-const Menu = styled.ul`
-list-style: none;
-position: relative;
-display: flex;
-width: 100%;
-align-items: center;
-background-color: #fefcff;
-margin: 0;
-padding: 20px 0;
-
-`;
-
-const Logo = styled.img`
-height: 60px;
-
-@media (max-width: 1230px) {
-  height: 30px;
-}
-
-@media (max-width: 1230px) {
-  display: none;
-}
-`;
-
-const LogoMin = styled.img`
-display:none;
-
-@media (max-width: 1230px) {
-  display: block;
-  height: 30px;
-}
-`;
-
-const MenuItem = styled.li`
-padding: 30px 30px;
-`;
-
-const MenuItemLogo = styled.li`
-padding: 0;
-padding-left: 5%;
-`;
-
-const LinkMenu = styled(Link)`
-text-decoration: none;
-color:white;
-text-transform: uppercase;
-color: #1A181D;
-font-weight: 500;
-`;
-
-const Log = styled(Link)`
-text-decoration: none;
-color: #1A181D;
-font-weight: 500;
-text-transform: uppercase;
-border: 2px solid #1A181D;
-padding: 10px 20px;
-border-radius: 20px;
-`;
-
-const LogLi = styled.li`
-padding: 30px 30px;
-flex-basis: 50%;
-text-align: right;
-`;
-
-const Welcome = styled.div`
-width: 500px;
-background: rgb(225,88,255);
-background: linear-gradient(90deg, rgba(225,88,255,1) 0%, rgba(165,56,255,1) 68%);
-position: relative;
-margin: auto;
-border-radius: 30px;
-padding: 20px;
-
-@media (max-width: 1230px) {
-  padding: 0;
-  width: 90%;
-}
-`;
-
-const Heading = styled.h1`
-color: #fff;
-padding: 20px;
-width: 300px;
-margin: auto;
-text-align: center;
-font-family: 'Inconsolata', monospace;
-font-weight: 300;
-
-@media (max-width: 1230px) {
-  padding: 20px 0;
-}
-`;
-
-const Text = styled.p`
-color: #fff;
-padding: 20px;
-text-align: justify;
-font-family: 'Inconsolata', monospace;
-font-weight: 300;
-
-@media (max-width: 1230px) {
-  padding: 10px 20px 40px 20px;
-}
-`;
+import {
+  Menu,
+  Logo,
+  LogoMin,
+  MenuItem,
+  MenuItemLogo,
+  Log,
+  LinkMenu,
+  LogLi,
+  Welcome,
+  Heading,
+  Text
+} from "./SocialAppStyle"
 
 
 class SocialApp extends Component {
@@ -135,16 +37,16 @@ class SocialApp extends Component {
           username: '',
           email: '',
           sessionToken: '',
-          start: false
+          start: false,
+          feeds:[]
         }
     }
 
     componentDidMount() {
 
       const token = localStorage.getItem('token');
-      if (token && !this.state.sessionToken) {
+      if (!this.state.start && token && !this.state.sessionToken) {
         this.setState ({sessionToken: token});
-        console.log('lalalal token')
         
           let logInUser = {
             username: 'adam',
@@ -170,7 +72,9 @@ class SocialApp extends Component {
             })
           
       }
+
     }
+
 
     setSessionState = (token) => {
       localStorage.setItem('token', token);
@@ -182,14 +86,21 @@ class SocialApp extends Component {
       this.setState({username: username});
     }
 
+    getFeeds = (obj) => {
+      this.setState(prevState => {
+        return({
+          feeds: obj
+        }); 
+      });
+    }
+
     logOut = () => {
       let user = JSON.parse(localStorage.getItem('user'))
-      console.log(user)
 
       let headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + user.jwt_token
+        'Authorization': 'Bearer ' + this.state.sessionToken
     };
 
     axios.post(
@@ -254,7 +165,7 @@ class SocialApp extends Component {
                   
                 </nav>
                 
-                {!this.state.start && <Welcome>
+                {!this.state.start && !user && <Welcome>
                     <Heading>Hi! Welcome to my Social App :)</Heading>
                     <Text>
                       Please <LinkMenu onClick={this.setStatus} to="/login">Log In</LinkMenu> if You already have account and <LinkMenu onClick={this.setStatus} to="/signup">Sign Up</LinkMenu> if You not :)
@@ -268,7 +179,7 @@ class SocialApp extends Component {
                 <Switch>
           
                   <Route exact path="/">
-                    <Home token = {this.state.sessionToken} updateStatus={this.setStatus}/>
+                    <Home token = {this.state.sessionToken} updateStatus={this.setStatus} getFeeds={this.getFeeds}/>
                   </Route>
           
                   <Route path="/signup">
@@ -280,7 +191,7 @@ class SocialApp extends Component {
                   </Route>
 
                   <Route path="/myprofile">
-                    <MyProfile />
+                    <MyProfile objFeed = {this.state.feeds}/>
                   </Route>
 
           
