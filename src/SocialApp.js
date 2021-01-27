@@ -95,7 +95,7 @@ class SocialApp extends Component {
     }
 
     logOut = () => {
-      let user = JSON.parse(localStorage.getItem('user'))
+
 
       let headers = {
         'Content-Type': 'application/json',
@@ -140,7 +140,7 @@ class SocialApp extends Component {
 
     render() {
       let user = JSON.parse(localStorage.getItem('user'));
-      
+   
         return (
           
             <Router>
@@ -187,7 +187,7 @@ class SocialApp extends Component {
                   </Route>
           
                   <Route path="/login">
-                  {this.state.login ? <Redirect to="/" /> : <Login updateStatus={this.setStatus} setToken={this.setSessionState} changeLoginState={this.setLogin}/>}
+                  { this.state.login ? <Redirect to="/" /> : <Login updateStatus={this.setStatus} setToken={this.setSessionState} changeLoginState={this.setLogin}/>}
                   </Route>
 
                   <Route path="/myprofile">
