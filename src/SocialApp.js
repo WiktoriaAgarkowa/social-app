@@ -8,7 +8,6 @@ import Login from './navigation/Login';
 import MyProfile from './profile/MyProfile';
 
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
   Redirect
@@ -142,10 +141,11 @@ class SocialApp extends Component {
       let user = JSON.parse(localStorage.getItem('user'));
    
         return (
-          
-            <Router>
+        
+          <div>
+            
               
-              <div className="App">
+            <div className="App">
                 <nav>
                   
                   <Menu>
@@ -173,12 +173,12 @@ class SocialApp extends Component {
                 </Welcome>}
                 
                 
-                </div>
+            </div>
               
         
                 <Switch>
           
-                  <Route exact path="/">
+                  <Route exact path="/social-app" component={Home}>
                     <Home token = {this.state.sessionToken} updateStatus={this.setStatus} getFeeds={this.getFeeds}/>
                   </Route>
           
@@ -197,10 +197,10 @@ class SocialApp extends Component {
           
                 </Switch> 
 
-              
-        
-            </Router>
-          );
+          </div>
+
+
+        );
     }
 };
 
